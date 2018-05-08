@@ -8,7 +8,7 @@ const config = require("./config.json");
 
 
 //parameter
-var ShowChan = 'general'
+var ShowChan = 'annonce-event'
 var prefix = '!'
 var role = []
 var AdminRole = "Administrateur"
