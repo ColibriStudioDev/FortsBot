@@ -27,10 +27,10 @@ var UserCreate
 var phase = 0
 
 bot.on('ready', function () {
-    console.log("Je suis connecté !");
+    console.log("Je suis connectÃ© !");
 })
 
-bot.login('NDQwODE4MzgyNjAyNzY0Mjk4.DcnfvA.g4rMmIFDQYtu34F0t_F7nkGUzQU');
+bot.login(process.env.TOKEN);
 
 
 
@@ -294,7 +294,7 @@ bot.on('message', message => {
                     }
 
                 }
-                message.channel.send("Aucun jeu trouvé veuillez ressayer")
+                message.channel.send("Aucun jeu trouvÃ© veuillez ressayer")
                 return
                 
             }
