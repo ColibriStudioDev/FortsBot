@@ -1,6 +1,10 @@
 const Discord = require('discord.js');
+const Enmap = require('enmap');
+const EnmapLevel = require('enmap-level');
 const bot = new Discord.Client();
 const config = require("./config.json");
+const tableSource = new EnmapLevel({ name: "GameRole" });
+const myTable = new Enmap({ provider: tableSource });
 
 
 
@@ -8,7 +12,7 @@ const config = require("./config.json");
 
 
 //parameter
-var ShowChan = 'annonce-event'
+var ShowChan = 'general'
 var prefix = '!'
 var role = []
 var AdminRole = "Administrateur"
@@ -30,7 +34,7 @@ bot.on('ready', function () {
     console.log("Je suis connecté !");
 })
 
-bot.login(process.env.TOKEN);
+bot.login('NDQwODE4MzgyNjAyNzY0Mjk4.DcnfvA.g4rMmIFDQYtu34F0t_F7nkGUzQU');
 
 
 
@@ -160,7 +164,6 @@ bot.on('message', message => {
             !help  :  list of the commands
             !gamerolejoin NameofTheRole  :  Join a gamerole
             !gamerolequit NameOfTheRole  :  Quit a gamerole
-            !gameroledisplay  :  Display all of the gamerole
             !eventjoin IDofTheEvent  :  join a event, take the event ID on the event channel
             
             Organisator command :
@@ -170,7 +173,6 @@ bot.on('message', message => {
             Admin command :
             !OrgaChange NameOfTheNewRole  :  change the organisator role
             !ShowCHan NameOfTheNewShowChan  :  Change the Event Show Channel
-            !gameroleadd NameOfTheNewGameRole : add a new GameRole
             
             `)
     }
@@ -199,32 +201,14 @@ bot.on('message', message => {
         }
         
     }
-    //ROLE DISPLAY
-    if (message.content === prefix + "gameroledisplay") {
-        var _authorole = message.guild.roles.find("name", AdminRole)
-        if (message.member.roles.find("name", AdminRole) === _authorole) {
-            for (var _i = 0; _i < role.length; _i++) {
-                message.channel.send("" + role[_i].name)
-                message.delete()
-            }
-        }
-    }
 
     //ROLE JOIN
     if (command === "gamerolejoin") {
         const _roleStringAdd = args.join(" ")
         var _role = message.guild.roles.find("name", _roleStringAdd)
 
-        for (var _i = 0; _i < role.length; _i++) {
-            if (role[_i] === _role) {
-                message.member.addRole(role[_i])
+                message.member.addRole(_role)
                 message.channel.send("The role was added succesfully")
-
-                return
-            }
-
-        }
-        message.channel.send("Any role was find please try again.")
     }
 
     //ROLE QUIT
@@ -232,17 +216,9 @@ bot.on('message', message => {
         const _roleStringQuit = args.join(" ")
         var _role = message.guild.roles.find('name', _roleStringQuit)
 
-
-        for (var _i = 0; _i < role.length; _i++) {
-            if (role[_i] === _role) {
-                message.member.removeRole(role[_i])
+                message.member.removeRole(_role)
                 message.channel.send("The role was removed succesfully")
 
-                return
-            }
-
-        }
-        message.channel.send("Any role was find please try again.")
     }
 
     //EVENT CREATE
@@ -285,17 +261,12 @@ bot.on('message', message => {
             }
             if (phase === 4) {
                 var _gamerole = message.guild.roles.find('name', message.content)
-                for (var _i = 0; _i < role.length; _i++) {
-                    if (role[_i] === _gamerole) {
+
                         EventGame[EventGame.length] = _gamerole
                         message.channel.send("Entrez le nombre de player maximum ->")
                         phase = 5
                         return
-                    }
 
-                }
-                message.channel.send("Aucun jeu trouvé veuillez ressayer")
-                return
                 
             }
             if (phase === 5) {
