@@ -1,10 +1,7 @@
 const Discord = require('discord.js');
-const Enmap = require('enmap');
-const EnmapLevel = require('enmap-level');
 const bot = new Discord.Client();
 const config = require("./config.json");
-const tableSource = new EnmapLevel({ name: "GameRole" });
-const myTable = new Enmap({ provider: tableSource });
+
 
 
 
@@ -176,36 +173,16 @@ bot.on('message', message => {
             
             `)
     }
-    //ROLE ADD
-    if (command === "gameroleadd") {
-        var _authorole = message.guild.roles.find("name", AdminRole)
-        if (message.member.roles.find("name", AdminRole) === _authorole) {
-
-            const _roleStringAdd = args.join(" ")
-            var _role = message.guild.roles.find("name", _roleStringAdd)
-
-            if (_role == null) {
-                message.channel.send("This role doesn't exist, please use a different word")
-                return
-            }
-            for (var _i = 0; _i < role.length; _i++) {
-                if (role[_i] === _role) {
-                    message.channel.send("This role was already added.")
-                    return
-                }
-            }
-            role[role.length] = _role
-            message.channel.send("Your new GameRole has been add to the list. The new GameRole is : " + role[role.length - 1])
-        } else {
-            message.channel.send("Sorry you are not the Administrator.")
-        }
-        
-    }
 
     //ROLE JOIN
     if (command === "gamerolejoin") {
         const _roleStringAdd = args.join(" ")
         var _role = message.guild.roles.find("name", _roleStringAdd)
+
+        if (_role == null) {
+            message.channel.send("This role doesn't exist, please use a different word")
+            return
+        }
 
                 message.member.addRole(_role)
                 message.channel.send("The role was added succesfully")
@@ -213,8 +190,13 @@ bot.on('message', message => {
 
     //ROLE QUIT
     if (command === "gamerolequit") {
-        const _roleStringQuit = args.join(" ")
-        var _role = message.guild.roles.find('name', _roleStringQuit)
+        const _roleStringAdd = args.join(" ")
+        var _role = message.guild.roles.find("name", _roleStringAdd)
+
+        if (_role == null) {
+            message.channel.send("This role doesn't exist, please use a different word")
+            return
+        }
 
                 message.member.removeRole(_role)
                 message.channel.send("The role was removed succesfully")
