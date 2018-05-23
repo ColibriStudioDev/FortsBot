@@ -244,6 +244,10 @@ bot.on('message', message => {
             if (phase === 4) {
                 var _gamerole = message.guild.roles.find('name', message.content)
 
+                if (_gamerole == null) {
+                message.channel.send("This role doesn't exist, please use a different word")
+                return
+                }
                         EventGame[EventGame.length] = _gamerole
                         message.channel.send("Entrez le nombre de player maximum ->")
                         phase = 5
